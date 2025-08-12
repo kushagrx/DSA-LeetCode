@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int compress(vector<char>& chars) {
+        int n = chars.size();
+        int write = 0;
+        int left = 0;
+
+        while (left<n) {
+            char curr = chars[left];
+            int count = 0;
+            int right = left;
+
+            while (right < n && chars[right] == curr) {
+                count++;
+                right++;
+            }
+            chars[write++] = curr;
+
+            if (count > 1) {
+                string cntStr = to_string(count);
+                for (char c : cntStr) {
+                    chars[write++] = c;
+                }
+            }
+            left = right;
+        }
+        return write;
+    }
+};
