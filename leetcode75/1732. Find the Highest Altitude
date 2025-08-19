@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int largestAltitude(vector<int>& gain) {
+        int n=gain.size();
+        vector<int>netalt(n+1,0);
+        int maxalt=0;
+
+        for(int i=0;i<n;i++){
+            netalt[i+1]=netalt[i]+gain[i];
+            maxalt=max(maxalt,netalt[i+1]);
+        }
+
+        return maxalt;
+    }
+};
