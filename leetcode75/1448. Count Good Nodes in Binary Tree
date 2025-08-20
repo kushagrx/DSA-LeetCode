@@ -1,0 +1,32 @@
+class Solution {
+public:
+    void dfsleft(TreeNode* root,int largest,int& gnodes){
+        if(!root) return;
+        if(root->val>=largest){
+            gnodes++;
+            largest=root->val;
+        }
+        dfsleft(root->left,largest,gnodes);
+        dfsleft(root->right,largest,gnodes);
+    }
+
+    void dfsright(TreeNode* root,int largest,int& gnodes){
+        if(!root) return;
+        if(root->val>=largest){
+            gnodes++;
+            largest=root->val;
+        }
+        dfsright(root->left,largest,gnodes);
+        dfsright(root->right,largest,gnodes);
+    }
+
+    int goodNodes(TreeNode* root) {
+        if(root==NULL) return 0;
+        int gnodes=1;
+        int largest=root->val;
+        dfsleft(root->left,largest,gnodes);
+        dfsright(root->right,largest,gnodes);
+
+        return gnodes;
+    }
+};
