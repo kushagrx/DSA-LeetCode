@@ -1,0 +1,15 @@
+
+class Solution {
+public:
+    void dfs(TreeNode*root, vector<int>& result){
+        if(root==NULL) return;
+        result.push_back(root->val);
+        dfs(root->left,result);
+        dfs(root->right,result);
+    }
+    vector<int> preorderTraversal(TreeNode* root) {
+        vector<int>res;
+        dfs(root,res);
+        return res;
+    }
+};
