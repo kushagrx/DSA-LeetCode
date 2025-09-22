@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int maxFrequencyElements(vector<int>& nums) {
+        unordered_map<int, int> hashmap;
+        for (auto it : nums) {
+            hashmap[it]++;
+        }
+        
+        int maxfreq = 0;
+        for (auto i : hashmap) {
+            maxfreq = max(maxfreq, i.second);
+        }
+
+        int result = 0;
+        for (auto i : hashmap) {
+            if (i.second == maxfreq) {
+                result += i.second;
+            }
+        }
+
+        return result;
+    }
+};
