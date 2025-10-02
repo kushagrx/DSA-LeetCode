@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int n;
+    int dp[1005][1005];
+
+    int solve(vector<vector<int>>&pairs, int prev,int curr){
+        if(curr>=n) return 0;
+        if(dp[prev+1][curr]!=-1) return dp[prev+1][curr];
+
+        int take=0;
+        if(prev==-1 || pairs[prev][1]<pairs[curr][0]){
+            take=1+solve(pairs,curr,curr+1);
+        }
+        int skip=solve(pairs,prev,curr+1);
+
+        return dp[prev+1][curr]=max(take,skip);
+    }
+
+    int findLongestChain(vector<vector<int>>& pairs) {
+        n=pairs.size();
+        sort(pairs.begin(),pairs.end());
+        memset(dp,-1,sizeof(dp));
+        return solve(pairs,-1,0);
+    }
+};
