@@ -1,0 +1,21 @@
+class Solution {
+public:
+    void dfs(TreeNode* root, vector<int>& result){
+        if(!root) return;
+        if(root->left == NULL && root->right == NULL){
+            result.push_back(root->val);
+            return;
+        }
+        dfs(root->left,result);
+        dfs(root->right,result);   
+    }
+
+    bool leafSimilar(TreeNode* root1, TreeNode* root2) {
+        vector<int>res1;
+        vector<int>res2;
+        dfs(root1,res1);
+        dfs(root2,res2);
+
+        return res1==res2;
+    }
+};
