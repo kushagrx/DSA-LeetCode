@@ -1,0 +1,44 @@
+class Solution {
+public:
+    int n;
+    int dp[1001][1001];
+
+    bool isPred(string& a, string& b) {
+        if (b.size() - a.size() != 1) return false;
+
+        int i = 0, j = 0;
+        bool skipped = false;
+        while (i < a.size() && j < b.size()) {
+            if (a[i] == b[j]) {
+                i++; j++;
+            } else {
+                if (skipped) return false;
+                skipped = true;
+                j++;
+            }
+        }
+        return true;
+    }
+
+    int solve(vector<string>& words, int prev, int curr) {
+        if (curr == n) return 0;
+        if (prev != -1 && dp[prev][curr] != -1) return dp[prev][curr];
+
+        int take = 0;
+        if (prev == -1 || isPred(words[prev], words[curr])) {
+            take = 1 + solve(words, curr, curr + 1);
+        }
+        int skip = solve(words, prev, curr + 1);
+
+        return prev == -1 ? max(take, skip) : dp[prev][curr] = max(take, skip);
+    }
+
+    int longestStrChain(vector<string>& words) {
+        sort(words.begin(), words.end(), [](string &a, string &b){
+            return a.size() < b.size();
+        });
+        memset(dp, -1, sizeof(dp));
+        n = words.size();
+        return solve(words, -1, 0);
+    }
+};
