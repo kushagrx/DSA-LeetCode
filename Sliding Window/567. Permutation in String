@@ -1,0 +1,24 @@
+class Solution {
+public:
+    bool checkInclusion(string s1, string s2) {
+        unordered_map<char,int>mp,window;
+        for(auto it:s1){
+            mp[it]++;
+        }
+        int wsize=s1.length();
+
+        int left=0;
+        for(int right=0;right<s2.length();right++){
+            window[s2[right]]++;
+            if(right-left + 1>wsize){
+                window[s2[left]]--;
+                if(window[s2[left]]==0) window.erase(s2[left]);
+                left++;
+            }
+            if(window==mp && right-left+1 == wsize) return true;
+        }
+        
+        return false;
+
+    }
+};
