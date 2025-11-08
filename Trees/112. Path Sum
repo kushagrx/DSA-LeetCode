@@ -1,0 +1,17 @@
+class Solution {
+public:
+    bool traversal(TreeNode* root, int targetSum, int sum) {
+        if (!root) return false;
+        sum += root->val;
+        if (!root->left && !root->right) {
+            return sum == targetSum;   //basically keep checking at each leaf node
+        }
+        return traversal(root->left, targetSum, sum) || 
+               traversal(root->right, targetSum, sum);
+    }
+
+    bool hasPathSum(TreeNode* root, int targetSum) {
+        if (!root) return false;
+        return traversal(root, targetSum, 0);
+    }
+};
