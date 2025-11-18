@@ -1,0 +1,40 @@
+class Solution {
+public:
+    bool dfs(int i, vector<vector<int>>& adj,vector<bool>&visited,vector<bool>&recstack){
+        visited[i]=true;
+        recstack[i]=true;
+        for(auto it:adj[i]){
+            if(!visited[it]){
+                if(dfs(it,adj,visited,recstack)){
+                    return true;
+                }
+            }
+            else if(recstack[it]){
+                return true;
+            }
+        }
+
+        recstack[i]=false;
+        return false;
+    }
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<vector<int>>adj(numCourses);
+        vector<bool>visited(numCourses,false);
+        vector<bool>recstack(numCourses,false);
+
+        for(auto it:prerequisites){
+            int u=it[0],v=it[1];
+            adj[u].push_back(v);
+        }
+
+        for(int i=0;i<numCourses;i++){
+            if(visited[i]==false){
+                if(dfs(i,adj,visited,recstack)){
+                    return false; //cycle is present
+                }
+            }
+        }
+
+        return true;
+    }
+};
