@@ -1,0 +1,26 @@
+class Solution {
+public:
+    vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
+        unordered_map<int,int>mp;
+        stack<int>monostack;
+
+        for(auto num:nums2){
+            while(!monostack.empty() && num>monostack.top()){
+                mp[monostack.top()]=num;
+                monostack.pop();
+            }
+            monostack.push(num);
+        }
+
+        while(!monostack.empty()){
+            mp[monostack.top()]= -1;
+            monostack.pop();
+        }
+
+        vector<int>result;
+        for(auto num:nums1){
+            result.push_back(mp[num]);
+        }
+        return result;
+    }
+};
