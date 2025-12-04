@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int dp[10001];
+    int n;
+
+    int solve(int i,vector<int>& points){
+        if(i<=0) return 0;
+        if(dp[i]!=-1) return dp[i];
+
+        int take=points[i]+solve(i-2,points);
+        int skip=solve(i-1,points);
+
+        return dp[i]=max(take,skip);
+    }
+
+    int deleteAndEarn(vector<int>& nums) {
+        int maxval=0;
+        for(int n:nums){
+            maxval=max(maxval,n);
+        }
+        vector<int>points(maxval+1,0);
+        for(auto x:nums){
+            points[x]+=x;
+        }
+        memset(dp,-1,sizeof(dp));
+
+        return solve(maxval,points);
+    }
+};
