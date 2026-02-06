@@ -1,0 +1,31 @@
+class Solution {
+public:
+    long long dp[100001][2];
+    int n;
+
+    long long solve(vector<int>& nums, int idx, bool flag){
+        if(idx>=n) return 0;
+        if(dp[idx][flag]!=-1) return dp[idx][flag];
+
+        long long skip=solve(nums,idx+1,flag);
+        int val=nums[idx];
+
+        long long take;
+        if(flag){
+            take=nums[idx]+solve(nums,idx+1,false);
+        }
+        else{
+            take=-nums[idx]+solve(nums,idx+1,true);
+        }
+        
+        return dp[idx][flag]=max(take,skip);
+
+    }
+
+    long long maxAlternatingSum(vector<int>& nums) {
+        memset(dp,-1,sizeof(dp));
+        n=nums.size();
+
+        return solve(nums,0,true);
+    }
+};
