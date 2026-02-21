@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int dfs(TreeNode* root){
+        if(!root) return 0;
+        if(!root->left && !root->right) return 1;
+
+        int left=dfs(root->left);
+        int right=dfs(root->right);
+
+        if(!root->left) return 1 + right;
+        if(!root->right) return 1 + left;
+
+        return 1 + min(left, right);
+    }
+    int minDepth(TreeNode* root) {
+        return dfs(root);
+    }
+};
