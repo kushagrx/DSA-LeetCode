@@ -1,0 +1,33 @@
+class Solution {
+public:
+
+    int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
+        int n=grid.size();
+        if(grid[0][0] == 1 || grid[n-1][n-1] == 1) return -1;
+        queue<pair<int,int>>q;
+        q.push({0,0});
+        grid[0][0]=1;
+
+        vector<pair<int,int>> dir = {
+            {1,0},{-1,0},{0,1},{0,-1},
+            {1,1},{1,-1},{-1,1},{-1,-1}
+        };
+
+        while(!q.empty()){
+            auto [x,y] = q.front();
+            q.pop();
+            if(x == n-1 && y == n-1) return grid[x][y];
+
+            for(auto [dx,dy] : dir){
+                int new_x = x + dx;
+                int new_y = y + dy;
+                if(new_x>=0 && new_y>=0 && new_x<n && new_y<n && grid[new_x][new_y]==0){
+                    grid[new_x][new_y] = grid[x][y] + 1;  //increases length
+                    q.push({new_x,new_y});
+                }
+            }
+        }
+
+        return -1;
+    }
+};
