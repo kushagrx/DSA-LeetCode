@@ -1,26 +1,25 @@
 class Solution {
 public:
-    bool helper(string sub, string &s) {
-        string temp = "";
-        int times = s.length() / sub.length();
-        for (int i = 0; i < times; i++) {
-            temp += sub;
+    bool solve(string substring,string& s){
+        string temp="";
+        int times=s.length()/substring.length();
+        for(int i=0;i<times;i++){
+            temp+=substring;
         }
-        return temp == s;
+        return temp==s;
     }
 
     bool repeatedSubstringPattern(string s) {
-        int n = s.length();
-        string substring = "";
+        int n=s.length();
+        string subst="";
 
-        for (int idx = 0; idx < n; idx++) {
-            substring.push_back(s[idx]);
-            if (n % substring.length() != 0) continue;
-            if (substring.length() < n) {
-                if (helper(substring, s)) return true;
+        for(int i=0;i<n;i++){
+            subst.push_back(s[i]);
+            if(n%subst.length()!=0) continue;
+            if(n>subst.length()){
+                if(solve(subst,s)) return true;
             }
         }
-
         return false;
     }
 };
