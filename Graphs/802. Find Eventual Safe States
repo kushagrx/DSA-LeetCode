@@ -1,0 +1,44 @@
+class Solution {
+public:
+        bool isCycle(int u, vector<vector<int>>& graph, vector<bool>& visited, vector<bool>& recStack, vector<bool>& isSafe) {
+        visited[u] = true;
+        recStack[u] = true;
+
+        for (auto& v : graph[u]) {
+            if (!visited[v]) {
+                if (isCycle(v, graph, visited, recStack, isSafe)) return true;
+            } else if (recStack[v]) {
+                return true;
+            } else if (!isSafe[v]) {
+                return true;
+            }
+        }
+
+        recStack[u] = false;
+        isSafe[u] = true;
+        return false;
+    }
+
+    vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
+        int V=graph.size();
+
+        vector<bool>visited(V,false);
+        vector<bool>recStack(V,false);
+        vector<bool>isSafe(V,false);
+        vector<int>safenodes;
+
+        for(int i=0;i<V;i++){
+            if(!visited[i]){
+                isCycle(i,graph,visited,recStack,isSafe);
+            }
+        }
+        for(int i=0;i<V;i++){
+            if(isSafe[i]){
+                safenodes.push_back(i);
+            }
+        }
+
+        return safenodes;
+
+    }
+};
