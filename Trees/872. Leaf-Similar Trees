@@ -1,13 +1,13 @@
 class Solution {
 public:
-    void dfs(TreeNode* root, vector<int>& result){
+    void dfs(TreeNode* root, vector<int>&res){
         if(!root) return;
-        if(root->left == NULL && root->right == NULL){
-            result.push_back(root->val);
+        if(!root->left && !root->right){
+            res.push_back(root->val);
             return;
-        }
-        dfs(root->left,result);
-        dfs(root->right,result);   
+        } 
+        dfs(root->left,res);
+        dfs(root->right,res);
     }
 
     bool leafSimilar(TreeNode* root1, TreeNode* root2) {
