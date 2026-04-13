@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int repeatedStringMatch(string a, string b) {
+        int cnt=0;
+        string ans="";
+        int n=a.length();
+        int m=b.length();
+        
+        while(ans.length()<m){
+            ans+=a;
+            cnt++;            
+        }
+        if(ans.find(b)!=string::npos) return cnt;
+        ans+=a;
+        cnt++;
+        if(ans.find(b)!=string::npos) return cnt;
+        return -1;
+    }
+};
