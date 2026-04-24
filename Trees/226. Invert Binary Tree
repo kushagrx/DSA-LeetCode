@@ -1,19 +1,15 @@
 class Solution {
 public:
-    void Traversal(TreeNode* root){
-        if(!root) return;
-        TreeNode* left=root->left;  
+    TreeNode* invertTree(TreeNode* root) {
+        if(!root) return nullptr;
+        TreeNode* left=root->left;
         TreeNode* right=root->right;
 
-        root->left=right;  
+        root->left=right;
         root->right=left;
+        invertTree(left);
+        invertTree(right);
 
-        Traversal(root->left);
-        Traversal(root->right);
-    }
-    TreeNode* invertTree(TreeNode* root) {
-        if(!root) return NULL;
-        Traversal(root);
         return root;
     }
 };
