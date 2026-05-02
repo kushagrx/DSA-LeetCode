@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int sumcheck(vector<int>v){
+        int sum=0;
+        for(int i:v){
+            sum+=i;
+        }
+        return sum;
+    }
+    void dfs(TreeNode* root,vector<int>&curr,vector<vector<int>>&res, int targetSum){
+        if(!root) return;
+        curr.push_back(root->val);
+        if(!root->left&&!root->right){
+            if(sumcheck(curr)==targetSum){
+                res.push_back(curr);
+            }
+        }
+        else{
+            dfs(root->left,curr,res,targetSum);
+            dfs(root->right,curr,res,targetSum);
+        }
+        curr.pop_back();
+    }
+
+    vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
+        vector<int>curr;
+        vector<vector<int>>res;
+        dfs(root,curr,res,targetSum);
+        return res;  
+    }
+};
