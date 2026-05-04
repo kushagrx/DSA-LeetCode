@@ -1,40 +1,22 @@
 class Solution {
 public:
     string convert(string s, int numRows) {
-        if (numRows == 1 || s.size() <= numRows) return s;
+        if(numRows==1) return s;
+        vector<string>rows(numRows);
+        int row=0;
+        bool goingDown=true;
 
-        vector<vector<char>> matrix(numRows, vector<char>(s.size(), ' '));
-        int row = 0, col = 0;
-        bool goingDown = true;
-
-        for (char c : s) {
-            matrix[row][col] = c;
-
-            if (goingDown) {
-                if (row == numRows - 1) { // reached bottom
-                    goingDown = false;
-                    row--;
-                    col++;
-                } else row++;
-            } else {
-                if (row == 0) { // reached top
-                    goingDown = true;
-                    row++;
-                } else {
-                    row--;
-                    col++;
-                }
-            }
+        for(char c:s){
+            rows[row]+=c;
+            if(row==0) goingDown=true;
+            if(row==numRows-1) goingDown=false;
+            row+= goingDown?1:-1;
         }
 
-        string result = "";
-        for (int i = 0; i < numRows; i++) {
-            for (int j = 0; j < s.size(); j++) {
-                if (matrix[i][j] != ' ')
-                    result += matrix[i][j];
-            }
+        string res="";
+        for(string r:rows){
+            res+=r;
         }
-
-        return result;
+        return res;
     }
 };
