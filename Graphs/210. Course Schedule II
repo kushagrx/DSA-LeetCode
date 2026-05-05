@@ -1,0 +1,38 @@
+class Solution {
+public:
+    bool dfs(unordered_map<int,vector<int>>&adj,vector<bool>&visited,
+    vector<bool>&recStack,vector<int>&res,int u){
+
+        visited[u]=true;
+        recStack[u]=true;
+
+        for(auto v:adj[u]){
+            if(!visited[v]&&dfs(adj,visited,recStack,res,v)) return true;
+            if(recStack[v]) return true;
+        }
+        recStack[u]=false;
+        res.push_back(u);
+        return false;
+    }
+
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<bool>visited(numCourses,false);
+        vector<bool>recStack(numCourses,false);
+        unordered_map<int,vector<int>>adj;
+
+        for(auto edge:prerequisites){
+            int u=edge[0],v=edge[1];
+            adj[v].push_back(u);
+        }
+        vector<int>res;
+        for(int i=0;i<numCourses;i++){
+            if(!visited[i]){
+                if(dfs(adj,visited,recStack,res,i)){
+                    return {};
+                }
+            }
+        }
+        reverse(res.begin(),res.end());
+        return res;    
+    }
+};
