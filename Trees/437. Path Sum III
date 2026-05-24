@@ -1,24 +1,22 @@
 class Solution {
 public:
-    int dfs(TreeNode* root, long long sum, int target) {
-        if (!root) return 0;
-        int count = 0;
-        sum += root->val;
-        if (sum == target) count++;
+    int dfs(TreeNode* root, int targetSum,long long curr){
+        if(!root) return 0;
+        int count=0;
+        curr+=root->val;
+        if(curr==targetSum) count++;
 
-        count += dfs(root->left, sum, target);
-        count += dfs(root->right, sum, target);
+        count+=dfs(root->left,targetSum,curr);
+        count+=dfs(root->right,targetSum,curr);
 
         return count;
     }
 
     int pathSum(TreeNode* root, int targetSum) {
-        if (!root) return 0;
-        int res = dfs(root, 0, targetSum);
-
-        res += pathSum(root->left, targetSum);
-        res += pathSum(root->right, targetSum);
-
-        return res;
+        if(!root) return 0;
+        return dfs(root,targetSum,0)+    
+        pathSum(root->left,targetSum)+
+        pathSum(root->right,targetSum);  
+ 
     }
 };
