@@ -8,8 +8,11 @@ public:
         while(left<n && right<m){
             if(s[left]==t[right]){
                 left++;
+                right++;
             }
-            right++;
+            else{
+                right++;
+            }
         }
         return left==n;
     }
